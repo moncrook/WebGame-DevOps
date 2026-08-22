@@ -15,46 +15,94 @@ jobs:
 
     name: Build and Unit Test
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
 
-      # 1. Lấy source code
+      # ==========================================
+      # 1. Checkout source code
+      # ==========================================
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # 2. Cài JDK 21
+      # ==========================================
+      # 2. Setup JDK 21
+      # ==========================================
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
 
-      # 3. Kiểm tra Java
+      # ==========================================
+      # 3. Install Ant
+      # ==========================================
+      - name: Install Ant
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ant
+
+      # ==========================================
+      # 4. Setup Tomcat 10.1.57
+      # ==========================================
+      - name: Setup Tomcat 10.1.57
+        run: |
+          wget -q https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.57/bin/apache-tomcat-10.1.57.tar.gz
+          tar -xzf apache-tomcat-10.1.57.tar.gz
+          echo "CATALINA_HOME=$GITHUB_WORKSPACE/apache-tomcat-10.1.57" >> $GITHUB_ENV
+
+      # ==========================================
+      # 5. Check Java
+      # ==========================================
       - name: Check Java version
         run: java -version
 
-      # 4. Kiểm tra Ant
+      # ==========================================
+      # 6. Check Ant
+      # ==========================================
       - name: Check Ant version
         run: ant -version
 
-      # 5. Clean project
+      # ==========================================
+      # 7. Check Tomcat
+      # ==========================================
+      - name: Check Tomcat
+        run: |
+          echo "Tomcat home: $CATALINA_HOME"
+          ls -la "$CATALINA_HOME"
+
+      # ==========================================
+      # 8. Clean project
+      # ==========================================
       - name: Clean project
-        run: ant clean
+        run: |
+          ant -Dj2ee.server.home="$CATALINA_HOME" clean
 
-      # 6. Unit Test
+      # ==========================================
+      # 9. Unit Test
+      # ==========================================
       - name: Run unit tests
-        run: ant test
+        run: |
+          ant -Dj2ee.server.home="$CATALINA_HOME" test
 
-      # 7. Build WAR
+      # ==========================================
+      # 10. Build WAR
+      # ==========================================
       - name: Build WAR
-        run: ant dist
+        run: |
+          ant -Dj2ee.server.home="$CATALINA_HOME" dist
 
-      # 8. Kiểm tra WAR
+      # ==========================================
+      # 11. Check WAR
+      # ==========================================
       - name: Check WAR file
-        run: ls -lh dist/
+        run: |
+          ls -lh dist/
+          test -f dist/WebGame.war
 
-      # 9. Upload WAR artifact
+      # ==========================================
+      # 12. Upload WAR artifact
+      # ==========================================
       - name: Upload WAR artifact
         uses: actions/upload-artifact@v4
         with:
