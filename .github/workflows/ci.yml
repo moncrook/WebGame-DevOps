@@ -127,6 +127,9 @@ jobs:
           name: WebGame-WAR
           path: dist/WebGame.war
     
+      # ==========================================
+      # Build Docker image
+      # ==========================================
       - name: Build Docker image
         run: |
           docker build \
@@ -160,21 +163,28 @@ jobs:
 
 
       # ==========================================
+      # Set lowercase image name
+      # ==========================================
+      - name: Set image name
+        run: |
+          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
+      # ==========================================
       # 16. Tag Docker image for GHCR
       # ==========================================
-      - name: Tag Docker image for GHCR
+      - name: Tag Docker image
         run: |
           docker tag webgame:${{ github.sha }} \
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            $IMAGE_NAME:${{ github.sha }}
 
-          docker tag webgame:${{ github.sha }} \
-            ghcr.io/${{ github.repository }}:latest
+          docker tag webgame:latest \
+            $IMAGE_NAME:latest
 
       
       # ==========================================
       # 17. Push Docker image to GHCR
       # ==========================================
-      - name: Push Docker image to GHCR
+      - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker push $IMAGE_NAME:${{ github.sha }}
+          docker push $IMAGE_NAME:latest
