@@ -71,26 +71,40 @@ jobs:
           echo "Tomcat home: $CATALINA_HOME"
           ls -la "$CATALINA_HOME"
 
+        
+      - name: Check NetBeans CopyLibs
+        run: |
+            ls -lh "$GITHUB_WORKSPACE/lib/"
+
       # ==========================================
       # 8. Clean project
       # ==========================================
       - name: Clean project
         run: |
-          ant -Dj2ee.server.home="$CATALINA_HOME" clean
+            ant \
+            -Dj2ee.server.home="$CATALINA_HOME" \
+            -Dlibs.CopyLibs.classpath="$GITHUB_WORKSPACE/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" \
+            clean
 
       # ==========================================
       # 9. Unit Test
       # ==========================================
       - name: Run unit tests
         run: |
-          ant -Dj2ee.server.home="$CATALINA_HOME" test
+            ant \
+            -Dj2ee.server.home="$CATALINA_HOME" \
+            -Dlibs.CopyLibs.classpath="$GITHUB_WORKSPACE/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" \
+            test
 
       # ==========================================
       # 10. Build WAR
       # ==========================================
       - name: Build WAR
         run: |
-          ant -Dj2ee.server.home="$CATALINA_HOME" dist
+            ant \
+            -Dj2ee.server.home="$CATALINA_HOME" \
+            -Dlibs.CopyLibs.classpath="$GITHUB_WORKSPACE/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" \
+            dist
 
       # ==========================================
       # 11. Check WAR
