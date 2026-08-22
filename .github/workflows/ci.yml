@@ -1,0 +1,66 @@
+name: WebGame CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  build-and-test:
+
+    name: Build and Unit Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1. Lấy source code
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      # 2. Cài JDK 21
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # 3. Cài Ant
+      - name: Setup Ant
+        uses: actions/setup-ant@v1
+
+      # 4. Kiểm tra Java
+      - name: Check Java version
+        run: java -version
+
+      # 5. Kiểm tra Ant
+      - name: Check Ant version
+        run: ant -version
+
+      # 6. Clean project
+      - name: Clean project
+        run: ant clean
+
+      # 7. Unit Test
+      - name: Run unit tests
+        run: ant test
+
+      # 8. Build WAR
+      - name: Build WAR
+        run: ant dist
+
+      # 9. Kiểm tra WAR
+      - name: Check WAR file
+        run: ls -lh dist/
+
+      # 10. Upload WAR artifact
+      - name: Upload WAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WebGame-WAR
+          path: dist/WebGame.war
