@@ -1,0 +1,23 @@
+# NetBeans
+nbproject/private/
+
+# Ant build
+build/
+dist/
+
+# Java
+*.class
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Environment / secrets
+.env

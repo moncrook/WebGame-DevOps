@@ -1,0 +1,645 @@
+/* ==========================================
+   1. TRANG NẠP TIỀN & BỐ CỤC CHUNG
+========================================== */
+.topup-page {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+}
+
+.topup-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+    gap: 20px;
+}
+
+/* Khối khung thẻ (Card) dùng chung */
+.topup-card,
+.balance-card,
+.guide-card,
+.support-card,
+.history-card {
+    border: 1px solid #514b42;
+    border-radius: 20px;
+    background: #1b1b1a;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+/* ==========================================
+   2. TIÊU ĐỀ TRANG (BANNER TOP)
+========================================== */
+.topup-title {
+    min-height: 105px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border: 1px solid #5a5143;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #211607, #3a2509, #1d1c1a);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.topup-title-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #202020;
+    font-size: 24px;
+}
+
+.topup-subtitle {
+    display: block;
+    margin-bottom: 4px;
+    color: #ff6f25;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.topup-title h1 {
+    margin: 0;
+    color: #fff;
+    font-size: 30px;
+}
+
+/* ==========================================
+   3. KHUNG FORM NẠP TIỀN (BÊN TRÁI)
+========================================== */
+.topup-card {
+    padding: 28px;
+}
+
+.card-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.heading-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #30200d;
+    font-size: 21px;
+}
+
+.card-heading h2 {
+    margin: 0 0 4px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.card-heading p {
+    margin: 0;
+    color: #938d84;
+    font-size: 13px;
+}
+
+/* Thông tin tài khoản */
+.account-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 17px;
+    margin-bottom: 28px;
+    border-radius: 10px;
+    background: #242321;
+}
+
+.account-box span {
+    color: #928c82;
+    font-size: 13px;
+}
+
+.account-box strong {
+    color: #fff;
+}
+
+/* Danh sách chọn mệnh giá */
+.amount-section h3,
+.payment-section h3 {
+    margin: 0 0 15px;
+    color: #eee;
+    font-size: 15px;
+}
+
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.amount-item {
+    min-height: 75px;
+    padding: 12px;
+    border: 1px solid #4d4942;
+    border-radius: 10px;
+    background: #232323;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.amount-item:hover {
+    border-color: #ff7625;
+    transform: translateY(-2px);
+}
+
+.amount-item.active {
+    border: 2px solid #ff7625 !important;
+    background: rgba(255, 118, 37, 0.15) !important;
+}
+
+.amount-item strong {
+    display: block;
+    margin-bottom: 7px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.amount-item span {
+    color: #928b80;
+    font-size: 11px;
+}
+
+/* Ô nhập số tiền tùy chỉnh */
+.custom-amount-box {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #1a1816;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #444;
+}
+
+.custom-amount-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #ff8c00;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+}
+
+/* Phương thức thanh toán */
+.payment-section {
+    margin-top: 28px;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #45423e;
+    border-radius: 10px;
+    background: #232323;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.payment-method.active {
+    border-color: #ff7625 !important;
+    background: rgba(255, 118, 37, 0.15) !important;
+}
+
+.payment-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #302b26;
+}
+
+.payment-info {
+    flex: 1;
+}
+
+.payment-info strong {
+    display: block;
+    color: #eee;
+    font-size: 14px;
+}
+
+.payment-info span {
+    display: block;
+    margin-top: 3px;
+    color: #88827a;
+    font-size: 11px;
+}
+
+.check {
+    color: #ff7625;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Khung hiển thị QR code */
+.qr-section {
+    margin-top: 18px;
+    background: #1a1816;
+    border: 1px dashed #ff8c00;
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+}
+
+.qr-section img {
+    width: 190px;
+    height: 190px;
+    border-radius: 6px;
+    border: 2px solid #333;
+    background: #fff;
+    padding: 5px;
+}
+
+.qr-info {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #bbb;
+    text-align: left;
+    background: #23201d;
+    padding: 10px;
+    border-radius: 6px;
+    line-height: 1.6;
+}
+
+/* Tổng tiền & Nút xác nhận */
+.payment-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: 10px;
+    border-top: 1px solid #383633;
+}
+
+.payment-total span {
+    color: #aaa39a;
+}
+
+.payment-total strong {
+    color: #ff8a35;
+    font-size: 22px;
+}
+
+.topup-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff7625, #ff9d3f);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.topup-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 118, 37, 0.25);
+}
+
+.payment-note {
+    margin: 14px 0 0;
+    color: #706b64;
+    text-align: center;
+    font-size: 11px;
+}
+
+/* ==========================================
+   4. SIDEBAR TIỆN ÍCH (BÊN PHẢI)
+========================================== */
+.topup-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Số dư tài khoản */
+.balance-card {
+    padding: 22px;
+    text-align: center;
+}
+
+.balance-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: #34220e;
+    font-size: 22px;
+}
+
+.balance-card span {
+    display: block;
+    color: #918a80;
+    font-size: 12px;
+}
+
+.balance-card strong {
+    display: block;
+    margin: 7px 0;
+    color: #ff9a42;
+    font-size: 28px;
+}
+
+.balance-card small {
+    color: #77716a;
+    font-size: 11px;
+}
+
+/* Hướng dẫn */
+.guide-card {
+    padding: 20px;
+}
+
+.guide-card h3 {
+    margin: 0 0 18px;
+    color: #eee;
+    font-size: 15px;
+}
+
+.guide-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.guide-item:last-child {
+    margin-bottom: 0;
+}
+
+.guide-item span {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #30200e;
+    color: #ff852f;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.guide-item p {
+    margin: 0;
+    color: #a29b91;
+    font-size: 12px;
+}
+
+/* Hỗ trợ khách hàng */
+.support-card {
+    display: flex;
+    gap: 12px;
+    padding: 18px;
+}
+
+.support-icon {
+    font-size: 22px;
+}
+
+.support-card strong {
+    color: #eee;
+    font-size: 13px;
+}
+
+.support-card p {
+    margin: 5px 0 0;
+    color: #88827a;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* ==========================================
+   5. LỊCH SỬ GIAO DỊCH
+========================================== */
+.history-card {
+    margin-top: 20px;
+    padding: 25px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-header span {
+    color: #ff7027;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.history-header h2 {
+    margin: 5px 0 0;
+    color: #fff;
+    font-size: 20px;
+}
+
+.history-icon {
+    font-size: 25px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    color: #eee;
+}
+
+.history-table th,
+.history-table td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    text-align: left;
+    font-size: 14px;
+}
+
+.history-table th {
+    color: #ff8c00;
+}
+
+.badge-success {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+/* Trạng thái chưa có giao dịch */
+.empty-history {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    border-radius: 12px;
+    background: #222221;
+}
+
+.empty-history div {
+    margin-bottom: 10px;
+    color: #ffad5d;
+    font-size: 30px;
+}
+
+.empty-history p {
+    margin: 0 0 5px;
+    color: #a29b91;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.empty-history span {
+    color: #6f6a63;
+    font-size: 11px;
+}
+
+/* ==========================================
+   6. MODAL POPUP THẺ CÀO / THẺ GAME
+========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #23201d;
+    border: 1px solid #ff8c00;
+    border-radius: 10px;
+    padding: 25px 30px;
+    width: 420px;
+    max-width: 90%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #3a3633;
+    padding-bottom: 10px;
+}
+
+.modal-header h3 {
+    color: #ff8c00;
+    margin: 0;
+    font-size: 18px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    background: #1a1816;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.btn-card-submit {
+    width: 100%;
+    padding: 12px;
+    background: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.btn-card-submit:hover {
+    background: #e07b00;
+}
+
+/* ==========================================
+   7. RESPONSIVE GIAO DIỆN
+========================================== */
+@media (max-width: 800px) {
+    .topup-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .topup-page {
+        padding: 25px 12px 50px;
+    }
+
+    .topup-title {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .topup-title h1 {
+        font-size: 25px;
+    }
+
+    .amount-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .topup-card {
+        padding: 20px;
+    }
+}

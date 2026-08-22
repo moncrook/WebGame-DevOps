@@ -1,0 +1,614 @@
+/* ==========================================
+   TRANG TIN TỨC
+========================================== */
+
+.news-page {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 35px 20px 70px;
+}
+
+
+/* ==========================================
+   KHUNG CHỨA TẤT CẢ SỰ KIỆN
+========================================== */
+
+.events-box {
+    width: 100%;
+    background: #191919;
+    border: 1px solid #5a5143;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ==========================================
+   HEADER CỦA KHUNG SỰ KIỆN
+========================================== */
+
+.events-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 20px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #211607,
+        #3a2509,
+        #1d1c1a
+    );
+
+    border-bottom: 1px solid #4d4437;
+}
+
+.events-header > span {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #242424;
+    border-radius: 12px;
+
+    font-size: 22px;
+}
+
+.events-header small {
+    display: block;
+
+    color: #ff6f25;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 3px;
+}
+
+.events-header h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 24px;
+}
+
+
+/* ==========================================
+   DANH SÁCH SỰ KIỆN
+========================================== */
+
+.events-list {
+    padding: 14px 18px;
+}
+
+
+/* ==========================================
+   MỖI SỰ KIỆN
+========================================== */
+
+.event-item {
+    display: flex;
+    align-items: center;
+
+    min-height: 150px;
+
+    padding: 14px;
+
+    background: #202020;
+
+    border: 1px solid #454545;
+
+    border-radius: 12px;
+
+    margin-bottom: 12px;
+
+    transition: 0.2s;
+}
+
+
+/* bỏ margin ở bài cuối */
+
+.event-item:last-child {
+    margin-bottom: 0;
+}
+
+
+/* hover */
+
+.event-item:hover {
+    border-color: #ff7025;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ==========================================
+   ẢNH SỰ KIỆN
+========================================== */
+
+.event-image {
+    width: 220px;
+    height: 120px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 9px;
+
+    background: #111;
+}
+
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* ==========================================
+   NỘI DUNG SỰ KIỆN
+========================================== */
+
+.event-content {
+    padding: 5px 20px;
+
+    flex: 1;
+}
+
+
+.event-category {
+    display: block;
+
+    color: #ff7025;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 7px;
+}
+
+
+.event-content h3 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    line-height: 1.2;
+}
+
+
+.event-content p {
+    margin: 0 0 12px;
+
+    color: #aaa397;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    /* Không cho nội dung quá dài */
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+.event-content a{
+    color: #ff7025;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+
+.event-content a:hover {
+    color: #ff9b52;
+}
+
+
+/* ==========================================
+   KHUNG COMMENT
+========================================== */
+
+.comments-box {
+
+    margin-top: 25px;
+
+    width: 100%;
+
+    background: #191919;
+
+    border: 1px solid #5a5143;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ==========================================
+   HEADER COMMENT
+========================================== */
+
+.comments-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #211607,
+        #30200b
+    );
+
+    border-bottom: 1px solid #4d4437;
+}
+
+.comment-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 10px;
+    transition: background 0.2s ease, transform 0.2s ease;
+    margin: 2px 0;
+}
+
+.comment-link:hover {
+    color: inherit;
+    background: #242424;
+    transform: translateX(3px);
+}
+
+.comment-link:active {
+    transform: translateX(1px);
+}
+
+.comment-link .comment-item {
+    transition: border-color 0.2s ease;
+}
+
+.comment-link:hover .comment-item {
+    border-bottom-color: #4a4035;
+}
+
+.comment-link h4 {
+    color: #ddd;
+    transition: color 0.2s ease;
+}
+
+.comment-link:hover h4 {
+    color: #ff7025;
+}
+
+.comment-link .comment-content strong {
+    transition: color 0.2s ease;
+}
+
+.comment-link:hover .comment-content strong {
+    color: #ff9b52;
+}
+
+.comments-header > span {
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #242424;
+
+    font-size: 22px;
+}
+
+
+.comments-header small {
+
+    display: block;
+
+    color: #ff6f25;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+
+.comments-header h2 {
+
+    margin: 3px 0 0;
+
+    color: #ffffff;
+
+    font-size: 23px;
+}
+
+
+/* ==========================================
+   DANH SÁCH COMMENT
+========================================== */
+
+.comment-list {
+
+    padding: 8px 20px;
+}
+
+
+/* ==========================================
+   COMMENT
+========================================== */
+
+.comment-item {
+
+    display: flex;
+
+    gap: 12px;
+
+    padding: 15px 5px;
+
+    border-bottom: 1px solid #333;
+}
+
+
+.comment-item:last-child {
+
+    border-bottom: none;
+}
+
+
+/* avatar */
+
+.comment-avatar {
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #292929;
+
+    border: 1px solid #444;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+
+/* nội dung */
+
+.comment-content {
+
+    flex: 1;
+}
+
+
+.comment-content strong {
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    margin-right: 8px;
+}
+
+
+.comment-time {
+
+    color: #777;
+
+    font-size: 11px;
+}
+
+
+.comment-content p {
+
+    margin: 7px 0;
+
+    color: #bbb;
+
+    font-size: 13px;
+}
+
+
+.comment-actions {
+
+    display: flex;
+
+    gap: 18px;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+
+/* ==========================================
+   Ô NHẬP COMMENT
+========================================== */
+
+.comment-input {
+
+    display: flex;
+
+    gap: 10px;
+
+    padding: 15px 20px;
+
+    background: #202020;
+
+    border-top: 1px solid #333;
+}
+
+
+.comment-input textarea {
+
+    flex: 1;
+
+    min-height: 45px;
+
+    max-height: 100px;
+
+    resize: vertical;
+
+    padding: 12px;
+
+    color: #ffffff;
+
+    background: #171717;
+
+    border: 1px solid #444;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 13px;
+}
+
+
+.comment-input textarea:focus {
+
+    border-color: #ff7025;
+}
+
+
+.comment-input button {
+
+    align-self: flex-end;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #ff7025;
+
+    color: #ffffff;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.comment-input button:hover {
+
+    background: #ff8b45;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .news-page {
+
+        padding: 20px 12px 50px;
+    }
+
+
+    .events-header,
+    .comments-header {
+
+        padding: 15px;
+    }
+
+
+    .events-list {
+
+        padding: 10px;
+    }
+
+
+    .event-item {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        padding: 10px;
+    }
+
+
+    .event-image {
+
+        width: 100%;
+
+        height: 160px;
+    }
+
+
+    .event-content {
+
+        padding: 12px 5px 5px;
+    }
+
+
+    .event-content h3 {
+
+        font-size: 18px;
+    }
+
+
+    .comment-input {
+
+        flex-direction: column;
+    }
+
+
+    .comment-input button {
+
+        align-self: stretch;
+    }
+
+}

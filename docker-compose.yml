@@ -1,0 +1,38 @@
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: webgame-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chien_binh_online
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  webgame:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webgame-app
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: chien_binh_online
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "8081:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

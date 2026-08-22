@@ -1,0 +1,381 @@
+/* ==========================================
+   GIAO DIỆN QUẢN LÝ SỰ KIỆN - HUNR ADMIN
+========================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #1a1816;
+    color: #fff;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #23201d;
+    padding: 20px;
+    border-right: 1px solid #333;
+}
+
+.sidebar h2 {
+    color: #ff8c00;
+    font-size: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px 15px;
+    color: #aaa;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: #ff8c00;
+    color: #fff;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.header-bar h1 {
+    font-size: 24px;
+    color: #ff8c00;
+}
+
+.header-bar a {
+    color: #dc3545;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+/* Thẻ thống kê */
+.stat-card {
+    background: #23201d;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #ff8c00;
+    width: 300px;
+}
+
+.stat-card small {
+    color: #888;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.stat-card h3 {
+    font-size: 24px;
+    margin-top: 5px;
+    color: #fff;
+}
+
+/* Nút thêm mới sự kiện */
+.btn-create-event {
+    padding: 10px 18px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.btn-create-event:hover {
+    background: #218838;
+}
+
+/* Thông báo */
+.alert-box {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid #28a745;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Bộ lọc tìm kiếm */
+.filter-container {
+    background: #23201d;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.filter-container input,
+.filter-container select {
+    padding: 10px 14px;
+    background: #1a1816;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.filter-container input {
+    flex: 1;
+}
+
+.filter-container input:focus,
+.filter-container select:focus {
+    border-color: #ff8c00;
+}
+
+.btn-filter {
+    padding: 10px 18px;
+    background: #ff8c00;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-filter:hover {
+    background: #e07b00;
+}
+
+.btn-reset {
+    padding: 10px 14px;
+    background: #444;
+    color: #ccc;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.btn-reset:hover {
+    background: #555;
+    color: #fff;
+}
+
+/* Bảng danh sách sự kiện */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #23201d;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.admin-table th {
+    background: #2a2724;
+    color: #ff8c00;
+    font-size: 14px;
+}
+
+/* Nút hành động */
+.btn-action {
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-view {
+    background: #17a2b8;
+    color: #fff;
+    margin-right: 4px;
+}
+
+.btn-view:hover {
+    background: #138496;
+}
+
+.btn-edit {
+    background: #ffc107;
+    color: #000;
+    margin-right: 4px;
+}
+
+.btn-edit:hover {
+    background: #e0a800;
+}
+
+.btn-del {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn-del:hover {
+    background: #c82333;
+}
+
+.empty-table-row {
+    text-align: center;
+    color: #888;
+    padding: 25px;
+}
+
+/* Modal Popup */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #23201d;
+    border: 1px solid #ff8c00;
+    border-radius: 10px;
+    padding: 25px 30px;
+    width: 580px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #3a3633;
+    padding-bottom: 10px;
+}
+
+.modal-header h3 {
+    color: #ff8c00;
+    margin: 0;
+    font-size: 18px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    background: #1a1816;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 6px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    border-color: #ff8c00;
+}
+
+.current-image-hint {
+    color: #aaa;
+    margin-top: 5px;
+    display: block;
+    font-size: 12px;
+}
+
+.btn-submit-create {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.btn-submit-create:hover {
+    background: #218838;
+}
+
+.btn-submit-edit {
+    width: 100%;
+    padding: 12px;
+    background: #ffc107;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.btn-submit-edit:hover {
+    background: #e0a800;
+}
