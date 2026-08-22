@@ -30,35 +30,31 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      # 3. Cài Ant
-      - name: Setup Ant
-        uses: actions/setup-ant@v1
-
-      # 4. Kiểm tra Java
+      # 3. Kiểm tra Java
       - name: Check Java version
         run: java -version
 
-      # 5. Kiểm tra Ant
+      # 4. Kiểm tra Ant
       - name: Check Ant version
         run: ant -version
 
-      # 6. Clean project
+      # 5. Clean project
       - name: Clean project
         run: ant clean
 
-      # 7. Unit Test
+      # 6. Unit Test
       - name: Run unit tests
         run: ant test
 
-      # 8. Build WAR
+      # 7. Build WAR
       - name: Build WAR
         run: ant dist
 
-      # 9. Kiểm tra WAR
+      # 8. Kiểm tra WAR
       - name: Check WAR file
         run: ls -lh dist/
 
-      # 10. Upload WAR artifact
+      # 9. Upload WAR artifact
       - name: Upload WAR artifact
         uses: actions/upload-artifact@v4
         with:
