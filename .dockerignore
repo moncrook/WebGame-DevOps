@@ -1,6 +1,6 @@
-build/
-.git/
+.git
 .gitignore
-nbproject/private/
-test/
-*.log
+build
+nbproject/private
+test
+README.md

@@ -122,3 +122,10 @@ jobs:
         with:
           name: WebGame-WAR
           path: dist/WebGame.war
+    
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t webgame:${{ github.sha }} \
+            -t webgame:latest \
+            .

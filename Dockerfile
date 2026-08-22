@@ -1,6 +1,8 @@
-FROM tomcat:10.1-jdk21
+FROM tomcat:10.1-jdk21-temurin
 
-COPY dist/WebGame.war /usr/local/tomcat/webapps/WebGame.war
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY dist/WebGame.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 
