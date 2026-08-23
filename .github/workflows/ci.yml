@@ -188,3 +188,36 @@ jobs:
         run: |
           docker push $IMAGE_NAME:${{ github.sha }}
           docker push $IMAGE_NAME:latest
+
+
+
+
+  test-self-hosted:
+
+     name: Test Ubuntu Deployment Server
+
+     runs-on: self-hosted
+
+     steps:
+
+      - name: Check server
+        run: |
+          echo "===== SERVER INFORMATION ====="
+          echo "Hostname:"
+          hostname
+
+          echo ""
+          echo "===== OS ====="
+          cat /etc/os-release
+
+          echo ""
+          echo "===== JAVA ====="
+          java -version
+
+          echo ""
+          echo "===== DOCKER ====="
+          docker --version
+
+          echo ""
+          echo "===== DOCKER COMPOSE ====="
+          docker compose version
