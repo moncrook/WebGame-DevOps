@@ -192,32 +192,27 @@ jobs:
 
 
 
-  test-self-hosted:
+  test-ghcr:
 
-     name: Test Ubuntu Deployment Server
+    name: Test GHCR Authentication
 
-     runs-on: self-hosted
+    runs-on: self-hosted
 
-     steps:
+    steps:
 
-      - name: Check server
+      - name: Login to GHCR
         run: |
-          echo "===== SERVER INFORMATION ====="
-          echo "Hostname:"
-          hostname
+          echo "${{ secrets.GHCR_TOKEN }}" | \
+            docker login ghcr.io \
+            -u "${{ secrets.GHCR_USERNAME }}" \
+            --password-stdin
 
-          echo ""
-          echo "===== OS ====="
-          cat /etc/os-release
+      - name: Pull WebGame image
+        run: |
+          docker pull ghcr.io/moncrook/webgame-devops:latest
 
-          echo ""
-          echo "===== JAVA ====="
-          java -version
+      - name: Check downloaded image
+        run: |
+          docker images ghcr.io/moncrook/webgame-devops
 
-          echo ""
-          echo "===== DOCKER ====="
-          docker --version
-
-          echo ""
-          echo "===== DOCKER COMPOSE ====="
-          docker compose version
+        
