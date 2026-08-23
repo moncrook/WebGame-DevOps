@@ -18,9 +18,7 @@ services:
       retries: 10
 
   webgame:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/moncrook/webgame-devops:latest
     container_name: webgame-app
     environment:
       DB_HOST: mysql
