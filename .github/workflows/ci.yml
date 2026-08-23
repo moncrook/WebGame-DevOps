@@ -192,6 +192,9 @@ jobs:
 
 
 
+    # ==========================================
+  # 18. Test GHCR Authentication
+  # ==========================================
   test-ghcr:
 
     name: Test GHCR Authentication
@@ -214,5 +217,52 @@ jobs:
       - name: Check downloaded image
         run: |
           docker images ghcr.io/moncrook/webgame-devops
+
+
+  # ==========================================
+  # 19. Deploy WebGame to Ubuntu
+  # ==========================================
+  deploy:
+
+    name: Deploy WebGame
+
+    needs:
+      - build-and-test
+      - test-ghcr
+
+    runs-on: self-hosted
+
+    steps:
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | \
+            docker login ghcr.io \
+            -u "${{ secrets.GHCR_USERNAME }}" \
+            --password-stdin
+
+      - name: Pull latest WebGame image
+        run: |
+          docker pull ghcr.io/moncrook/webgame-devops:latest
+
+      - name: Deploy with Docker Compose
+        run: |
+          cd /home/moncrook/webgame
+
+          docker compose down
+
+          docker compose up -d
+
+      - name: Check deployment
+        run: |
+          cd /home/moncrook/webgame
+
+          docker compose ps
+
+      - name: Check WebGame logs
+        run: |
+          cd /home/moncrook/webgame
+
+          docker compose logs webgame --tail=30
 
         
