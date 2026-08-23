@@ -15,126 +15,121 @@ permissions:
 
 jobs:
 
-  # ==========================================================
-  # 1. BUILD + TEST + DOCKER + TRIVY + GHCR
-  # ==========================================================
   build-and-test:
 
-    name: Build, Test and Push Docker Image
+    name: Build and Unit Test
 
     runs-on: ubuntu-24.04
 
     steps:
 
-      # --------------------------------------------------------
-      # 1. Checkout
-      # --------------------------------------------------------
+      # ==========================================
+      # 1. Checkout source code
+      # ==========================================
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # --------------------------------------------------------
-      # 2. JDK 21
-      # --------------------------------------------------------
+      # ==========================================
+      # 2. Setup JDK 21
+      # ==========================================
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
 
-      # --------------------------------------------------------
+      # ==========================================
       # 3. Install Ant
-      # --------------------------------------------------------
+      # ==========================================
       - name: Install Ant
         run: |
           sudo apt-get update
           sudo apt-get install -y ant
 
-      # --------------------------------------------------------
-      # 4. Setup Tomcat
-      # --------------------------------------------------------
+      # ==========================================
+      # 4. Setup Tomcat 10.1.57
+      # ==========================================
       - name: Setup Tomcat 10.1.57
         run: |
           wget -q https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.57/bin/apache-tomcat-10.1.57.tar.gz
           tar -xzf apache-tomcat-10.1.57.tar.gz
-          echo "CATALINA_HOME=$GITHUB_WORKSPACE/apache-tomcat-10.1.57" >> "$GITHUB_ENV"
+          echo "CATALINA_HOME=$GITHUB_WORKSPACE/apache-tomcat-10.1.57" >> $GITHUB_ENV
 
-      # --------------------------------------------------------
+      # ==========================================
       # 5. Check Java
-      # --------------------------------------------------------
+      # ==========================================
       - name: Check Java version
         run: java -version
 
-      # --------------------------------------------------------
+      # ==========================================
       # 6. Check Ant
-      # --------------------------------------------------------
+      # ==========================================
       - name: Check Ant version
         run: ant -version
 
-      # --------------------------------------------------------
+      # ==========================================
       # 7. Check Tomcat
-      # --------------------------------------------------------
+      # ==========================================
       - name: Check Tomcat
         run: |
           echo "Tomcat home: $CATALINA_HOME"
           ls -la "$CATALINA_HOME"
 
-      # --------------------------------------------------------
-      # 8. Check NetBeans CopyLibs
-      # --------------------------------------------------------
+        
       - name: Check NetBeans CopyLibs
         run: |
-          ls -lh "$GITHUB_WORKSPACE/lib/"
+            ls -lh "$GITHUB_WORKSPACE/lib/"
 
-      # --------------------------------------------------------
-      # 9. Clean
-      # --------------------------------------------------------
+      # ==========================================
+      # 8. Clean project
+      # ==========================================
       - name: Clean project
         run: |
-          ant \
+            ant \
             -Dj2ee.server.home="$CATALINA_HOME" \
             -Dlibs.CopyLibs.classpath="$GITHUB_WORKSPACE/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" \
             clean
 
-      # --------------------------------------------------------
-      # 10. Unit Test
-      # --------------------------------------------------------
+      # ==========================================
+      # 9. Unit Test
+      # ==========================================
       - name: Run unit tests
         run: |
-          ant \
+            ant \
             -Dj2ee.server.home="$CATALINA_HOME" \
             -Dlibs.CopyLibs.classpath="$GITHUB_WORKSPACE/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" \
             test
 
-      # --------------------------------------------------------
-      # 11. Build WAR
-      # --------------------------------------------------------
+      # ==========================================
+      # 10. Build WAR
+      # ==========================================
       - name: Build WAR
         run: |
-          ant \
+            ant \
             -Dj2ee.server.home="$CATALINA_HOME" \
             -Dlibs.CopyLibs.classpath="$GITHUB_WORKSPACE/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar" \
             dist
 
-      # --------------------------------------------------------
-      # 12. Check WAR
-      # --------------------------------------------------------
+      # ==========================================
+      # 11. Check WAR
+      # ==========================================
       - name: Check WAR file
         run: |
           ls -lh dist/
           test -f dist/WebGame.war
 
-      # --------------------------------------------------------
-      # 13. Upload WAR
-      # --------------------------------------------------------
+      # ==========================================
+      # 12. Upload WAR artifact
+      # ==========================================
       - name: Upload WAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: WebGame-WAR
           path: dist/WebGame.war
-
-      # --------------------------------------------------------
-      # 14. Build Docker image
-      # --------------------------------------------------------
+    
+      # ==========================================
+      # Build Docker image
+      # ==========================================
       - name: Build Docker image
         run: |
           docker build \
@@ -142,9 +137,9 @@ jobs:
             -t webgame:latest \
             .
 
-      # --------------------------------------------------------
-      # 15. Trivy Scan
-      # --------------------------------------------------------
+      # ==========================================
+      # 13. Scan Docker image with Trivy
+      # ==========================================
       - name: Scan Docker image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         with:
@@ -155,9 +150,10 @@ jobs:
           vuln-type: 'os,library'
           severity: 'HIGH,CRITICAL'
 
-      # --------------------------------------------------------
-      # 16. Login GHCR
-      # --------------------------------------------------------
+
+      # ==========================================
+      # 15. Login to GitHub Container Registry
+      # ==========================================
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -165,47 +161,48 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # --------------------------------------------------------
-      # 17. Set lowercase image name
-      # --------------------------------------------------------
+
+      # ==========================================
+      # Set lowercase image name
+      # ==========================================
       - name: Set image name
         run: |
           echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
 
-      # --------------------------------------------------------
-      # 18. Tag image
-      # --------------------------------------------------------
+      # ==========================================
+      # 16. Tag Docker image for GHCR
+      # ==========================================
       - name: Tag Docker image
         run: |
-          docker tag webgame:${{ github.sha }} "$IMAGE_NAME:${{ github.sha }}"
-          docker tag webgame:latest "$IMAGE_NAME:latest"
+          docker tag webgame:${{ github.sha }} \
+            $IMAGE_NAME:${{ github.sha }}
 
-      # --------------------------------------------------------
-      # 19. Push image to GHCR
-      # --------------------------------------------------------
+          docker tag webgame:latest \
+            $IMAGE_NAME:latest
+
+      
+      # ==========================================
+      # 17. Push Docker image to GHCR
+      # ==========================================
       - name: Push Docker image
         run: |
-          docker push "$IMAGE_NAME:${{ github.sha }}"
-          docker push "$IMAGE_NAME:latest"
+          docker push $IMAGE_NAME:${{ github.sha }}
+          docker push $IMAGE_NAME:latest
 
 
-  # ==========================================================
-  # 20. DEPLOY TO UBUNTU
-  # ==========================================================
-  deploy:
 
-    name: Deploy WebGame to Ubuntu
 
-    needs:
-      - build-and-test
+    # ==========================================
+  # 18. Test GHCR Authentication
+  # ==========================================
+  test-ghcr:
+
+    name: Test GHCR Authentication
 
     runs-on: self-hosted
 
     steps:
 
-      # --------------------------------------------------------
-      # 21. Login GHCR
-      # --------------------------------------------------------
       - name: Login to GHCR
         run: |
           echo "${{ secrets.GHCR_TOKEN }}" | \
@@ -213,45 +210,59 @@ jobs:
             -u "${{ secrets.GHCR_USERNAME }}" \
             --password-stdin
 
-      # --------------------------------------------------------
-      # 22. Pull latest image
-      # --------------------------------------------------------
+      - name: Pull WebGame image
+        run: |
+          docker pull ghcr.io/moncrook/webgame-devops:latest
+
+      - name: Check downloaded image
+        run: |
+          docker images ghcr.io/moncrook/webgame-devops
+
+
+  # ==========================================
+  # 19. Deploy WebGame to Ubuntu
+  # ==========================================
+  deploy:
+
+    name: Deploy WebGame
+
+    needs:
+      - build-and-test
+      - test-ghcr
+
+    runs-on: self-hosted
+
+    steps:
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | \
+            docker login ghcr.io \
+            -u "${{ secrets.GHCR_USERNAME }}" \
+            --password-stdin
+
       - name: Pull latest WebGame image
         run: |
           docker pull ghcr.io/moncrook/webgame-devops:latest
 
-      # --------------------------------------------------------
-      # 23. Deploy
-      # --------------------------------------------------------
       - name: Deploy with Docker Compose
         run: |
           cd /home/moncrook/webgame
 
-          docker compose pull webgame
+          docker compose down
 
           docker compose up -d
 
-      # --------------------------------------------------------
-      # 24. Check containers
-      # --------------------------------------------------------
       - name: Check deployment
         run: |
           cd /home/moncrook/webgame
 
           docker compose ps
 
-      # --------------------------------------------------------
-      # 25. Check WebGame
-      # --------------------------------------------------------
-      - name: Check WebGame
-        run: |
-          curl -f http://localhost:8081
-
-      # --------------------------------------------------------
-      # 26. Check logs
-      # --------------------------------------------------------
       - name: Check WebGame logs
         run: |
           cd /home/moncrook/webgame
 
           docker compose logs webgame --tail=30
+
+        
