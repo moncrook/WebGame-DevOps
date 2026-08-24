@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Chú Bé Rồng Online</title>
+        <title>chiến binh Online</title>
 
         <link rel="stylesheet"
               href="${pageContext.request.contextPath}/assest/css/style.css">
