@@ -24,7 +24,7 @@
                 <div class="hero-content">
 
                     <span class="hero-label">
-                        🔥 HỖ TRỢ NGỌC RỒNG
+                        🔥 HỖ TRỢ CHIẾN BINH
                     </span>
 
 
