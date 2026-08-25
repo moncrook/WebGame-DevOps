@@ -186,9 +186,11 @@ jobs:
         run: |
           cd /home/moncrook/webgame
 
-          docker compose down
-
-          docker compose up -d
+          docker compose pull
+          
+          docker compose up -d --force-recreate webgame
+          
+          docker image prune -f
 
       - name: Check deployment
         run: |
